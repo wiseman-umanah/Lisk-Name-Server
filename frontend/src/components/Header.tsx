@@ -1,10 +1,39 @@
 import React, { useEffect, useState } from "react"
 import ParticleBackground from "./Particle"
+import { useConnect, useAccount, useDisconnect } from 'wagmi'
+import { shortenAddress } from "../lib/utils"
+
+export function WalletOptions({ onConnect }: { onConnect: () => void }) {
+  const { connectors, connect } = useConnect({
+    mutation: {
+      onSuccess: () => {
+        onConnect()
+      },
+	},
+  })
+
+  return (
+    <div className="flex flex-col gap-2">
+      {connectors.map((connector) => (
+        <button key={connector.uid} onClick={() => connect({ connector })}>
+          {connector.name}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+
 
 const Header: React.FC = () => {
   const [show, setShow] = useState(true)
   const [atTop, setAtTop] = useState(true)
   const [lastScrollY, setLastScrollY] = useState(0)
+  const [walletOpen, setWalletOpen] = useState(false)
+  const { address, isConnected } = useAccount()
+
+  const { disconnect } = useDisconnect()
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,7 +47,8 @@ const Header: React.FC = () => {
   }, [lastScrollY])
 
   return (
-    <header
+    <>
+      <header
 		className={`fixed top-4 left-1/2 -translate-x-1/2 bg-white z-50 text-black transition-all duration-300
 			${show ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
 			${atTop ? "bg-transparent" : "backdrop-blur-md shadow-2xl"}
@@ -42,12 +72,43 @@ const Header: React.FC = () => {
               Docs
             </a>
           </nav>
-          <button className="water-drain-btn px-3 py-1 sm:px-6 sm:py-2 border border-black rounded-full bg-black font-medium text-xs sm:text-base">
-            <span>CONNECT WALLET</span>
-          </button>
+          {isConnected ? (
+              <button
+                className="water-drain-btn px-3 py-1 sm:px-6 sm:py-2 border border-black rounded-full bg-black font-medium text-xs sm:text-base"
+                onClick={() => disconnect()}
+                title={address}
+              >
+                <span>{shortenAddress(address ?? "")}</span>
+              </button>
+            ) : (
+              <button
+                className="water-drain-btn px-3 py-1 sm:px-6 sm:py-2 border border-black rounded-full bg-black font-medium text-xs sm:text-base"
+                onClick={() => setWalletOpen(true)}
+              >
+                <span>CONNECT WALLET</span>
+              </button>
+            )}
         </div>
       </div>
     </header>
+
+      {/* Modal for Wallet Options */}
+      {walletOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 min-w-[300px] text-black relative">
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-black text-xl"
+              onClick={() => setWalletOpen(false)}
+              aria-label="Close"
+            >
+              ×
+            </button>
+            <h2 className="text-lg font-bold mb-4">Connect your wallet</h2>
+            <WalletOptions onConnect={() => setWalletOpen(false)} />
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 

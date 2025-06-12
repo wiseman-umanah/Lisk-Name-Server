@@ -10,11 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.80.7",
     "framer-motion": "^12.17.0",
     "lucide-react": "^0.344.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "viem": "~2.31.0",
+    "wagmi": "^2.15.6"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",
