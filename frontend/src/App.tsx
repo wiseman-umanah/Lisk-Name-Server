@@ -8,11 +8,28 @@ import About from "./components/About"
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { WagmiProvider } from 'wagmi'
 import { config } from './lib/wagmiconfig'
-
+import { useEffect, useState } from "react"
+import { InfinitySpin } from 'react-loader-spinner'
 
 const queryClient = new QueryClient()
 
 function App() {
+	const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 5000) // 1.2s fake load
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (loading) 
+	return (
+		<div className="flex items-center bg-white justify-center h-screen">
+			<InfinitySpin
+				color="#000000"
+			/>
+		</div>
+	)
+
   return (
 	<WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
