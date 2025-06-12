@@ -70,14 +70,14 @@ const SearchBar: React.FC = () => {
     <div className="relative max-w-2xl mx-auto w-full">
       <div className="relative">
         <input
-          ref={inputRef}
-          type="text"
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-          onFocus={() => setIsDropdownOpen(true)}
-          placeholder="Search for your Lisk name"
-          className="w-full px-6 py-4 bg-transparent border border-gray-600 rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-white transition-colors text-lg"
-        />
+			ref={inputRef}
+			type="text"
+			value={searchValue}
+			onChange={(e) => setSearchValue(e.target.value)}
+			onFocus={() => setIsDropdownOpen(true)}
+			placeholder="Search for your Lisk name"
+			className="w-full px-6 py-4 bg-transparent border border-gray-600 rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-white transition-colors text-lg responsive-placeholder"
+		/>
 
         {searchValue && (
           <button
