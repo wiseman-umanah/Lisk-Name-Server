@@ -59,7 +59,7 @@ const Header: React.FC = () => {
         <div className="text-xl sm:text-2xl font-bold flex items-center space-x-2">
           <img
             src="/images/lisk.png"
-            className="h-8 sm:h-12 md:h-16 w-auto object-contain transition-all duration-300"
+            className="h-5 sm:h-12 md:h-16 w-auto object-contain transition-all duration-300"
             alt="Lisk Logo"
           />
           <span className="text-base sm:text-xl md:text-2xl">NS</span>
