@@ -1,5 +1,4 @@
 import type React from "react"
-import { Twitter } from "lucide-react"
 import { motion } from "framer-motion"
 
 const fadeInUp = {
@@ -85,9 +84,11 @@ const About: React.FC = () => {
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-400 text-sm">Copyright © 2025 Team HashGangs</div>
             <div className="flex items-center space-x-6">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors hover:scale-110">
-                <Twitter className="w-5 h-5" />
-              </a>
+              <nav>
+				<a href="#" className="text-sm sm:text-base hover:text-gray-700 transition-colors">
+				Docs
+				</a>
+			</nav>
               <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm hover:underline">
                 Terms of Service
               </a>

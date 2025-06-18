@@ -27,7 +27,6 @@ export function WalletOptions({ onConnect }: { onConnect: () => void }) {
 
 const Header: React.FC = () => {
   const [show, setShow] = useState(true)
-  const [atTop, setAtTop] = useState(true)
   const [lastScrollY, setLastScrollY] = useState(0)
   const [walletOpen, setWalletOpen] = useState(false)
   const { address, isConnected } = useAccount()
@@ -38,7 +37,7 @@ const Header: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentY = window.scrollY
-      setAtTop(currentY < window.innerHeight * 0.9)
+   
       setShow(currentY < 10 || currentY < lastScrollY)
       setLastScrollY(currentY)
     }
@@ -49,10 +48,9 @@ const Header: React.FC = () => {
   return (
     <>
       <header
-		className={`fixed top-4 left-1/2 -translate-x-1/2 bg-white z-50 text-black transition-all duration-300
+		className={`fixed top-0 left-1/2 -translate-x-1/2 bg-black z-50 text-white transition-all duration-300
 			${show ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
-			${atTop ? "bg-transparent" : "backdrop-blur-md shadow-2xl"}
-			w-[98vw] max-w-3xl rounded-full
+			w-full
 		`}
 		style={{ minWidth: 220 }}
 	>
@@ -61,20 +59,16 @@ const Header: React.FC = () => {
         <div className="text-xl sm:text-2xl font-bold flex items-center space-x-2">
           <img
             src="/images/lisk.png"
-            className="h-8 sm:h-12 md:h-16 w-auto object-contain invert transition-all duration-300"
+            className="h-8 sm:h-12 md:h-16 w-auto object-contain transition-all duration-300"
             alt="Lisk Logo"
           />
           <span className="text-base sm:text-xl md:text-2xl">NS</span>
         </div>
         <div className="flex items-center space-x-3 sm:space-x-6 mt-2 sm:mt-0">
-          <nav>
-            <a href="#" className="text-sm sm:text-base hover:text-gray-700 transition-colors">
-              Docs
-            </a>
-          </nav>
+          
           {isConnected ? (
               <button
-                className="water-drain-btn px-3 py-1 sm:px-6 sm:py-2 border border-black rounded-full bg-black font-medium text-xs sm:text-base"
+                className="water-drain-btn px-3 py-1 sm:px-6 sm:py-2 border border-white rounded-full bg-white font-medium text-xs sm:text-base"
                 onClick={() => disconnect()}
                 title={address}
               >
@@ -82,7 +76,7 @@ const Header: React.FC = () => {
               </button>
             ) : (
               <button
-                className="water-drain-btn px-3 py-1 sm:px-6 sm:py-2 border border-black rounded-full bg-black font-medium text-xs sm:text-base"
+                className="water-drain-btn px-3 py-1 sm:px-6 sm:py-2 border border-white rounded-full bg-white font-medium text-xs sm:text-base"
                 onClick={() => setWalletOpen(true)}
               >
                 <span>CONNECT WALLET</span>
@@ -90,6 +84,11 @@ const Header: React.FC = () => {
             )}
         </div>
       </div>
+	  <div className="absolute left-0 right-0 bottom-0 w-full h-6 pointer-events-none z-10"
+        style={{
+          background: "linear-gradient(to bottom, rgba(0,0,0,0.15), transparent)"
+        }}
+		/>
     </header>
 
       {/* Modal for Wallet Options */}

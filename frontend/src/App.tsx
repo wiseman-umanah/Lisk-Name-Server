@@ -10,6 +10,8 @@ import { WagmiProvider } from 'wagmi'
 import { config } from './lib/wagmiconfig'
 import { useEffect, useState } from "react"
 import { InfinitySpin } from 'react-loader-spinner'
+import { ContractProvider } from "./context/LiskNameService"
+
 
 const queryClient = new QueryClient()
 
@@ -32,17 +34,19 @@ function App() {
 
   return (
 	<WagmiProvider config={config}>
-      <QueryClientProvider client={queryClient}>
-			<div className="App">
-			<Header />
-			<Hero />
-				<div className="flex items-center justify-center mt-20 w-full gap-20 ">
-					<BrandLogos />
+    	<QueryClientProvider client={queryClient}>
+			<ContractProvider>
+				<div className="App">
+				<Header />
+				<Hero />
+					<div className="flex items-center justify-center mt-20 w-full gap-20 ">
+						<BrandLogos />
+					</div>
+					<Features />
+					<About />
+					<CustomCursor />
 				</div>
-				<Features />
-				<About />
-				<CustomCursor />
-			</div>
+			</ContractProvider>
 		</QueryClientProvider>
 	</WagmiProvider>
   )
