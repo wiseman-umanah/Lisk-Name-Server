@@ -6,7 +6,8 @@ import {
 	registerName as registerNameUtil,
 	renewName as renewNameUtil,
 	releaseName as releaseNameUtil,
-	claimRefund as claimRefundUtil
+	claimRefund as claimRefundUtil,
+	isAvailable as isAvailableUtil
  } from "./service_utils";
 
 
@@ -22,6 +23,9 @@ type ContractContextType = {
   ) => Promise<void>;
   claimRefund: (
   ) => Promise<void>;
+  isAvailable: (
+	name: string
+  ) => Promise<Boolean>
   loading: boolean;
   error: string | null;
   contract: Contract | null;
@@ -100,10 +104,25 @@ export const ContractProvider = ({ children }: { children: ReactNode }) => {
 		setError
 		);
 	};
+
+	const isAvailable = async ( name: string ) => {
+		if (!contract || !address) return false;
+
+		return await isAvailableUtil(
+			contract,
+			address,
+			name,
+			setLoading,
+			setError
+		);
+	};
+
+
     return (<ContractContext.Provider
 		value={{
 			registerName, renewName,
 			releaseName, claimRefund,
+			isAvailable,
 			loading, error, contract 
 		}}>
       {children}

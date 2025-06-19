@@ -82,13 +82,13 @@ const About: React.FC = () => {
           variants={fadeInUp}
         >
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-gray-400 text-sm">Copyright © 2025 Team HashGangs</div>
+            <div className="text-gray-400 text-sm">
+				Copyright © {new Date().getFullYear()} Team HashGangs
+			</div>
             <div className="flex items-center space-x-6">
-              <nav>
-				<a href="#" className="text-sm sm:text-base hover:text-gray-700 transition-colors">
+				<a href="#" className="text-gray-400 hover:text-white transition-colors text-sm hover:underline">
 				Docs
 				</a>
-			</nav>
               <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm hover:underline">
                 Terms of Service
               </a>

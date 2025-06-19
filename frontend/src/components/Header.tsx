@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import ParticleBackground from "./Particle"
 import { useConnect, useAccount, useDisconnect } from 'wagmi'
 import { shortenAddress } from "../lib/utils"
 
@@ -54,7 +53,6 @@ const Header: React.FC = () => {
 		`}
 		style={{ minWidth: 220 }}
 	>
-		<ParticleBackground	/>
       <div className="flex items-center justify-between px-4 sm:px-8 py-2 gap-2 sm:gap-0">
         <div className="text-xl sm:text-2xl font-bold flex items-center space-x-2">
           <img

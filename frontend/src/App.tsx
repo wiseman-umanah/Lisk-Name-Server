@@ -37,8 +37,8 @@ function App() {
     	<QueryClientProvider client={queryClient}>
 			<ContractProvider>
 				<div className="App">
-				<Header />
-				<Hero />
+					<Header />
+					<Hero />
 					<div className="flex items-center justify-center mt-20 w-full gap-20 ">
 						<BrandLogos />
 					</div>
