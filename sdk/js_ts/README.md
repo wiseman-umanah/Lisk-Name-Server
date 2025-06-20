@@ -20,22 +20,12 @@ npm install lisk-name-service
 ## Usage
 
 ```
-import { LNSClient } from "@your-username/lns-sdk";
+import { LNSClient } from 'lisk-name-service';
 
-// Instantiate the client
-const client = new LNSClient(
-  "YOUR_API_KEY",                    // Get this from LNS frontend
-);
+const lns = new LNSClient('your-api-key');
 
-// Resolve a name
-(async () => {
-  try {
-    const address = await client.resolve("myname");
-    console.log("✅ Resolved:", address);
-  } catch (err) {
-    console.error("❌ Error:", (err as Error).message);
-  }
-})();
+const result = await lns.resolve('wiseman');
+console.log(result);
 ```
 
 ## API
