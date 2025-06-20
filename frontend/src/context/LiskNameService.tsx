@@ -106,11 +106,14 @@ export const ContractProvider = ({ children }: { children: ReactNode }) => {
 	};
 
 	const isAvailable = async ( name: string ) => {
-		if (!contract || !address) return false;
-
+		setLoading(true);
+		setError(null);
+		if (!name) {
+			setError("Name is required")
+			return false
+		}
 		return await isAvailableUtil(
 			contract,
-			address,
 			name,
 			setLoading,
 			setError

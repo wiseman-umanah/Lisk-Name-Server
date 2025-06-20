@@ -1,4 +1,13 @@
-import { Contract } from "ethers"
+import { Contract, ethers } from "ethers"
+import { CONTRACT_ADDRESS, LiskNameService_ABI } from "./constants";
+
+const getPublicContract = () => {
+	const rpc = import.meta.env.VITE_LISK_JSONRPC
+  const provider = new ethers.JsonRpcProvider(rpc);
+  const contract = new ethers.Contract(CONTRACT_ADDRESS, LiskNameService_ABI, provider)
+  return contract
+}
+
 
 export const registerName = async (
   contract: Contract,
@@ -116,22 +125,19 @@ export const claimRefund = async (
 }
 
 export const isAvailable = async (
-	contract: Contract,
-	userAddress: string | undefined,
+	contract: Contract | null | undefined,
 	name: string | undefined,
 	setLoading: (loading: boolean) => void,
 	setError: (error: string | null) => void
 ): Promise<boolean> => {
-	if (!contract || !userAddress) {
-    setError("Connect wallet first")
-    return false;
-  }
+	const usedContract = contract ? contract : getPublicContract();
+	if (!usedContract) return false;
 
   try {
     setLoading(true)
     setError(null)
 
-    const available = await contract.isAvailable(name);
+    const available = await usedContract.isAvailable(name);
     return available;
   } catch (err) {
     const message = err instanceof Error ? err.message : "Transaction failed"
@@ -143,3 +149,25 @@ export const isAvailable = async (
   }
 }
 
+export const getPrice = async (
+  name: string,
+  setLoading: (loading: boolean) => void,
+  setError: (error: string | null) => void
+): Promise<string> => {
+  const contract = getPublicContract()
+  try {
+    setLoading(true)
+    setError(null)
+
+    const priceWei = await contract.calculatePrice(name)
+    const price = (Number(priceWei) / 1e18).toFixed(3) + " LSK"
+    return price
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Could not fetch price"
+    console.error("Error getting price:", message)
+    setError(message)
+    throw err
+  } finally {
+    setLoading(false)
+  }
+}

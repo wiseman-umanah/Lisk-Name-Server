@@ -86,7 +86,10 @@ const About: React.FC = () => {
 				Copyright © {new Date().getFullYear()} Team HashGangs
 			</div>
             <div className="flex items-center space-x-6">
-				<a href="#" className="text-gray-400 hover:text-white transition-colors text-sm hover:underline">
+				<a 
+					href="/dev-portal"
+					target="_blank"
+					className="text-gray-400 hover:text-white transition-colors text-sm hover:underline">
 				Docs
 				</a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm hover:underline">

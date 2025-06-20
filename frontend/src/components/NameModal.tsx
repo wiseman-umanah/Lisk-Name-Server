@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useContract } from "../context/LiskNameService"
 import { useAccount } from "wagmi"
+import { getPrice } from "../context/service_utils"
+
 
 interface NameModalProps {
   name: string
@@ -33,12 +35,11 @@ const NameModal: React.FC<NameModalProps> = ({ name, available, onClose }) => {
   useEffect(() => {
     const fetchDetails = async () => {
       setError(null)
-      if (!contract) return
       try {
         setLoading(true)
-        const priceWei = await contract.calculatePrice(name)
-        setPrice((Number(priceWei) / 1e18).toFixed(3) + " LSK")
-        if (!available) {
+        const fetchPrice = await getPrice(name, setLoading, setError);
+        setPrice(fetchPrice)
+        if (!available && contract) {
           const info = await contract.names(name)
           setOwner(info.owner)
           setExpires(Number(info.expires))
@@ -100,12 +101,17 @@ const NameModal: React.FC<NameModalProps> = ({ name, available, onClose }) => {
               <span className="font-semibold">Price:</span> {price}
             </div>
             <button
-              className="w-full bg-black text-white py-2 rounded hover:bg-gray-900 transition"
+              className="w-full bg-black text-white py-2 rounded hover:bg-gray-900 transition disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={handleBuy}
-              disabled={loading}
+              disabled={loading || !address}
             >
               {loading ? "Processing..." : "Buy"}
             </button>
+			{!address && (
+			<div className="text-sm text-red-500 mt-2 text-center">
+				Please connect your wallet to continue.
+			</div>
+			)}
           </>
         ) : (
           <>
@@ -119,14 +125,16 @@ const NameModal: React.FC<NameModalProps> = ({ name, available, onClose }) => {
             {address?.toLowerCase() === owner?.toLowerCase() ? (
               <div className="flex gap-2">
                 <button
-                  className="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+                  className="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
                   onClick={handleAuction}
+				  disabled={!address}
                 >
                   Auction Name
                 </button>
                 <button
-                  className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700 transition"
+                  className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
                   onClick={handleRelease}
+				  disabled={!address}
                 >
                   Release Name
                 </button>
