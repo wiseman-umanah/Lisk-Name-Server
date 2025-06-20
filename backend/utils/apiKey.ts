@@ -2,7 +2,6 @@ import crypto from "crypto";
 import { DB_ID, COLL_ID, ID, databases } from "./database";
 import { Query } from "node-appwrite";
 
-const apiKeys = new Map<string, string>(); // key => address
 
 export async function generateApiKey(): Promise<string> {
   return crypto.randomBytes(8).toString("hex");
