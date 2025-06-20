@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react"
 import { useConnect, useAccount, useDisconnect } from 'wagmi'
 import { shortenAddress } from "../lib/utils"
+import { toast } from "react-toastify";
 
 export function WalletOptions({ onConnect }: { onConnect: () => void }) {
   const { connectors, connect } = useConnect({
     mutation: {
       onSuccess: () => {
+		toast.success('Wallet connected')
         onConnect()
       },
+	  onError: () => {
+	  	toast.error('Wallet failed to connect')
+	  },
 	},
   })
 

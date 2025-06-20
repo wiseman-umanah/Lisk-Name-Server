@@ -9,7 +9,7 @@ import {
 	claimRefund as claimRefundUtil,
 	isAvailable as isAvailableUtil
  } from "./service_utils";
-
+import { toast } from "react-toastify";
 
 type ContractContextType = {
   registerName: (
@@ -109,7 +109,7 @@ export const ContractProvider = ({ children }: { children: ReactNode }) => {
 		setLoading(true);
 		setError(null);
 		if (!name) {
-			setError("Name is required")
+			toast.error("Name is required")
 			return false
 		}
 		return await isAvailableUtil(

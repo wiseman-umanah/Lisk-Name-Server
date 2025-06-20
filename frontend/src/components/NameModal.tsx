@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { useContract } from "../context/LiskNameService"
 import { useAccount } from "wagmi"
 import { getPrice } from "../context/service_utils"
-
+import { toast } from "react-toastify"
 
 interface NameModalProps {
   name: string
@@ -31,7 +31,7 @@ const NameModal: React.FC<NameModalProps> = ({ name, available, onClose }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [onClose])
 
-  // Fetch price and owner/expiry if needed
+
   useEffect(() => {
     const fetchDetails = async () => {
       setError(null)
@@ -45,7 +45,7 @@ const NameModal: React.FC<NameModalProps> = ({ name, available, onClose }) => {
           setExpires(Number(info.expires))
         }
       } catch (e: any) {
-        setError("Could not fetch details")
+        toast.error("Could not fetch details")
       } finally {
         setLoading(false)
       }
@@ -62,7 +62,7 @@ const NameModal: React.FC<NameModalProps> = ({ name, available, onClose }) => {
       await registerName(name)
       onClose()
     } catch (e: any) {
-      setError(e.message || "Failed to register")
+      toast.error("Failed to register")
     } finally {
       setLoading(false)
     }

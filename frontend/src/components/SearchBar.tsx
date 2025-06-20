@@ -5,6 +5,7 @@ import { useState, useRef, useEffect } from "react"
 import { Search, X } from "lucide-react"
 import { useContract } from "../context/LiskNameService"
 import NameModal from "./NameModal"
+import { toast } from "react-toastify"
 
 const SearchBar: React.FC = () => {
 	const { isAvailable } = useContract();
@@ -59,7 +60,7 @@ const SearchBar: React.FC = () => {
       const available = await isAvailable(searchValue)
       setAvailability(!!available)
     } catch (e) {
-      setError("Could not check availability")
+      toast.error("Could not check availability")
     } finally {
       setChecking(false)
     }

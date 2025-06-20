@@ -10,6 +10,8 @@ import { Developer } from './pages/Developer'
 import Header from "./components/Header"
 import CustomCursor from "./components/CustomCursor"
 import "./App.css"
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const queryClient = new QueryClient()
 
@@ -40,6 +42,18 @@ function App() {
 						<Route path='/' element={<Landing />} />
 						<Route path='/dev-portal' element={<Developer />} />
 					</Routes>
+					<ToastContainer
+						position="bottom-right"
+						autoClose={4000}
+						hideProgressBar={true}
+						newestOnTop={false}
+						closeOnClick
+						rtl={false}
+						pauseOnFocusLoss
+						draggable
+						pauseOnHover
+						theme="dark"
+					/>
 					<CustomCursor />
 				</div>
 			</ContractProvider>
