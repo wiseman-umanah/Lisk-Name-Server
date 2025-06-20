@@ -93,7 +93,7 @@ const generateApiKey = async () => {
 				<div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-20">
 					<div className="text-center w-full mx-auto mb-12">
 						<TypingText />
-						<p className="text-lg md:text-xl text-green-400 mb-12 max-w-2xl mx-auto">
+						<p className="text-lg md:text-xl text-white mb-12 max-w-2xl mx-auto">
 							Access powerful SDKs to and resolve .lisk domains programmatically.
 						</p>
 						<div className="flex flex-col md:flex-row max-w-2xl mx-auto w-full gap-4 md:items-stretch">
@@ -123,7 +123,7 @@ const generateApiKey = async () => {
 							<button
 							onClick={generateApiKey}
 							disabled={!isConnected || loading}
-							className={`px-3 py-1 sm:px-6 sm:py-2 rounded-xl hover:bg-green-400 bg-green-700 font-medium text-xs sm:text-base ${
+							className={`px-3 py-1 sm:px-6 sm:py-2 rounded-xl hover:bg-white hover:text-black border bg-black font-medium text-xs sm:text-base ${
 								!isConnected || loading
 							}`}
 							>
