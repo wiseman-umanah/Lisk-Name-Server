@@ -4,7 +4,6 @@ import dotenv from 'dotenv'
 
 dotenv.config();
 
-// 🎯 Initialize Appwrite client
 const client = new Client();
 
 const databases = new Databases(client);
