@@ -3,6 +3,7 @@ import { useContract } from "../context/LiskNameService"
 import { useAccount } from "wagmi"
 import { getPrice } from "../context/service_utils"
 import { toast } from "react-toastify"
+import { X } from "lucide-react"
 
 interface NameModalProps {
   name: string
@@ -45,7 +46,9 @@ const NameModal: React.FC<NameModalProps> = ({ name, available, onClose }) => {
           setExpires(Number(info.expires))
         }
       } catch (e: any) {
-        toast.error("Could not fetch details")
+        toast.error("Could not fetch details", {
+			icon: <X className="text-black"/>,
+		})
       } finally {
         setLoading(false)
       }
@@ -62,7 +65,11 @@ const NameModal: React.FC<NameModalProps> = ({ name, available, onClose }) => {
       await registerName(name)
       onClose()
     } catch (e: any) {
-      toast.error("Failed to register")
+      toast.error("Failed to register",
+		{
+			icon: <X className="text-black"/>,
+		}
+	  )
     } finally {
       setLoading(false)
     }

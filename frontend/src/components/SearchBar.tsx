@@ -60,7 +60,9 @@ const SearchBar: React.FC = () => {
       const available = await isAvailable(searchValue)
       setAvailability(!!available)
     } catch (e) {
-      toast.error("Could not check availability")
+      toast.error("Could not check availability", {
+			icon: <X className="text-black"/>,
+		})
     } finally {
       setChecking(false)
     }

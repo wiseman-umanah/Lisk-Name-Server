@@ -10,6 +10,7 @@ import {
 	isAvailable as isAvailableUtil
  } from "./service_utils";
 import { toast } from "react-toastify";
+import { X } from "lucide-react";
 
 type ContractContextType = {
   registerName: (
@@ -109,7 +110,9 @@ export const ContractProvider = ({ children }: { children: ReactNode }) => {
 		setLoading(true);
 		setError(null);
 		if (!name) {
-			toast.error("Name is required")
+			toast.error("Name is required", {
+			icon: <X className="text-black"/>,
+		})
 			return false
 		}
 		return await isAvailableUtil(

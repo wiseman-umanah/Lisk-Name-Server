@@ -53,6 +53,7 @@ function App() {
 						draggable
 						pauseOnHover
 						theme="dark"
+						toastClassName="bg-white text-black"
 					/>
 					<CustomCursor />
 				</div>
