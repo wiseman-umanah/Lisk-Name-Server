@@ -1,0 +1,186 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lisk Name Server Waitlist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Courier New', 'IBM Plex Mono', 'Inter', -apple-system, sans-serif;
+            background: #000000 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M0 0h100v100H0z' fill='none' stroke='%231A1A2E' stroke-width='1'/%3E%3Cpath d='M0 10h100M0 20h100M0 30h100M0 40h100M0 50h100M0 60h100M0 70h100M0 80h100M0 90h100' stroke='%231A1A2E' stroke-width='0.5'/%3E%3Cpath d='M10 0v100M20 0v100M30 0v100M40 0v100M50 0v100M60 0v100M70 0v100M80 0v100M90 0v100' stroke='%231A1A2E' stroke-width='0.5'/%3E%3C/svg%3E") repeat;
+            background-size: 50px 50px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #FFFFFF;
+            padding: 20px;
+        }
+        .container {
+            background: #000000;
+            padding: 40px;
+            border: 1px solid #FFFFFF;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            color: #FFFFFF;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: fadeIn 1s ease-in, glowPulse 2s ease-in-out infinite;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes glowPulse {
+            0%, 100% { text-shadow: 0 0 5px #FFFFFF, 0 0 10px #00A3FF; }
+            50% { text-shadow: 0 0 10px #FFFFFF, 0 0 20px #00A3FF; }
+        }
+        p {
+            color: #CCCCCC;
+            font-size: 1.1em;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            animation: fadeIn 1.5s ease-in 0.5s backwards;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        input[type="email"] {
+            padding: 14px;
+            font-size: 16px;
+            border: 2px solid #FFFFFF;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+            width: 100%;
+            transition: box-shadow 0.3s ease;
+        }
+        input[type="email"]:focus {
+            outline: none;
+            box-shadow: 0 0 15px #00A3FF;
+            border-color: #00A3FF;
+            animation: inputGlow 1.5s ease-in-out infinite;
+        }
+        @keyframes inputGlow {
+            0%, 100% { box-shadow: 0 0 10px #00A3FF; }
+            50% { box-shadow: 0 0 20px #00A3FF; }
+        }
+        button {
+            padding: 14px;
+            background: #000000;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: 600;
+            border: 2px solid #FFFFFF;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: buttonPulse 2s ease-in-out infinite;
+        }
+        @keyframes buttonPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        button:hover {
+            background: #FFFFFF;
+            color: #000000;
+            border: 2px solid #000000;
+            transform: translateY(-2px);
+            animation: none;
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .privacy {
+            font-size: 0.85em;
+            color: #FFFFFF;
+            margin-top: 20px;
+        }
+        .privacy a {
+            color: #00A3FF;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .privacy a:hover {
+            text-decoration: underline;
+            text-shadow: 0 0 5px #00A3FF;
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            p {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Join the Lisk Name Service Waitlist</h1>
+        <p>Lisk Name Service enhances your on-chain journey. Join the waitlist for early access!</p>
+        <!-- Form is configured with your Google Form details -->
+        <form action="https://docs.google.com/forms/d/e/1FAIpQLSe8jRjhrGnFjzEE3i6Cy-qRw-twgfu4Lb7i_7uZt5F-BXTzxQ/formResponse" method="POST">
+            <input type="email" name="entry.1192114356" placeholder="Enter your email" required>
+            <button type="submit">Join the Waitlist</button>
+        </form>
+        <p class="privacy">Your data is secure with us. We’ll only use your email for Lisk Name Server updates. <a href="#">Privacy Policy</a></p>
+    </div>
+</body>
+</html>
