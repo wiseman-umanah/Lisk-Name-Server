@@ -60,6 +60,49 @@
             color: #FFFFFF;
             padding: 20px;
         }
+        .moving-text-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.08;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .moving-text-bg span {
+            position: absolute;
+            white-space: nowrap;
+            font-size: 4em;
+            font-weight: bold;
+            color: #00A3FF;
+            opacity: 0.5;
+            animation: moveText 30s linear infinite;
+            user-select: none;
+        }
+
+        .moving-text-bg span:nth-child(2) {
+            top: 60%;
+            left: 0;
+            color: #fff;
+            opacity: 0.3;
+            animation-delay: 15s;
+            font-size: 3em;
+        }
+
+        @keyframes moveText {
+            0% {
+                transform: translateX(-100vw);
+            }
+            100% {
+                transform: translateX(100vw);
+            }
+        }
         .container {
             background: #000000;
             padding: 40px;
@@ -68,6 +111,8 @@
             text-align: center;
             max-width: 500px;
             width: 100%;
+            position: relative;
+            z-index: 1;
         }
         h1 {
             color: #FFFFFF;
@@ -172,13 +217,17 @@
     </style>
 </head>
 <body>
+    <div class="moving-text-bg">
+        <span>LISK NAME SERVICE &nbsp;•&nbsp; AUCTION YOUR NAME &nbsp;•&nbsp; COMING SOON &nbsp;•&nbsp;</span>
+        <span>LISK NAME SERVICE &nbsp;•&nbsp; JOIN THE WAITLIST FOR EARLY ACCESS &nbsp;•&nbsp; COMING SOON &nbsp;•&nbsp;</span>
+    </div>
     <div class="container">
         <h1>This Feature is Coming soon</h1>
         <p>Lisk Name Service enhances your on-chain journey. Join the waitlist for early access!</p>
         <!-- Form is configured with your Google Form details -->
         <!-- <form action="https://docs.google.com/forms/d/e/1FAIpQLSe8jRjhrGnFjzEE3i6Cy-qRw-twgfu4Lb7i_7uZt5F-BXTzxQ/formResponse" method="POST">
             <input type="email" name="entry.1192114356" placeholder="Enter your email" required> -->
-            <button type="submit">Join the Waitlist</button>
+            <button type="button" onclick="window.location.href='waitlist.html'">Join the Waitlist</button>
         <!-- </form> -->
         <!-- <p class="privacy">Your data is secure with us. We’ll only use your email for Lisk Name Server updates. <a href="#">Privacy Policy</a></p> -->
     </div>
