@@ -1,5 +1,9 @@
 
 import { ethers, upgrades } from'hardhat';
+import dotenv from 'dotenv';
+
+
+dotenv.config();
 
 const contract_address = process.env.CONTRACT_ADDRESS;
 

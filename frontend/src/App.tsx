@@ -1,17 +1,17 @@
-import Header from "./components/Header"
-import Hero from "./components/Hero"
-import CustomCursor from "./components/CustomCursor"
-import BrandLogos from "./components/BrandLogos"
-import "./App.css"
-import Features from "./components/Features"
-import About from "./components/About"
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { WagmiProvider } from 'wagmi'
 import { config } from './lib/wagmiconfig'
 import { useEffect, useState } from "react"
 import { InfinitySpin } from 'react-loader-spinner'
 import { ContractProvider } from "./context/LiskNameService"
-
+import { Routes, Route } from "react-router-dom"
+import { Landing } from './pages/Landing'
+import { Developer } from './pages/Developer'
+import Header from "./components/Header"
+import CustomCursor from "./components/CustomCursor"
+import "./App.css"
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const queryClient = new QueryClient()
 
@@ -38,12 +38,23 @@ function App() {
 			<ContractProvider>
 				<div className="App">
 					<Header />
-					<Hero />
-					<div className="flex items-center justify-center mt-20 w-full gap-20 ">
-						<BrandLogos />
-					</div>
-					<Features />
-					<About />
+					<Routes>
+						<Route path='/' element={<Landing />} />
+						<Route path='/dev-portal' element={<Developer />} />
+					</Routes>
+					<ToastContainer
+						position="bottom-right"
+						autoClose={4000}
+						hideProgressBar={true}
+						newestOnTop={false}
+						closeOnClick
+						rtl={false}
+						pauseOnFocusLoss
+						draggable
+						pauseOnHover
+						theme="dark"
+						toastClassName="bg-white text-black"
+					/>
 					<CustomCursor />
 				</div>
 			</ContractProvider>

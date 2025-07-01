@@ -18,11 +18,13 @@ contract LiskNameServiceV2 is Initializable, OwnableUpgradeable, ReentrancyGuard
     address public feeRecipient; // Mitigate DoS
     uint256 public constant NAME_MAX_LENGTH = 18;
     uint256 public constant RENEWAL_PERIOD = 365 days;
-    uint256 public constant MIN_FEE = 3 ether;
-    uint256 public constant MAX_FEE = 30 ether;
+    uint256 public constant MIN_FEE = 1_000_000_000_000_000;
+    // uint256 public constant MAX_FEE = 10 ether;
     uint256 public constant MIN_NAME_LENGTH = 3;
-    uint256 public constant BASE_PRICE = 30 ether;
-    uint256 public constant PRICE_REDUCTION_PER_LETTER = 1_500_000_000_000_000_000; // 1.5 ether
+	uint256 public constant BASE_PRICE = 100_000_000_000_000; // 0.00010 ether
+	uint256 public constant MAX_FEE = 100_000_000_000_000_000; // 0.1 ether
+    // uint256 public constant BASE_PRICE = 10 ether;
+    uint256 public constant PRICE_REDUCTION_PER_LETTER = 1_000_000_000_000;
 
     event NameRegistered(string indexed name, address indexed owner);
     event NameRenewed(string indexed name, uint256 newExpiry);

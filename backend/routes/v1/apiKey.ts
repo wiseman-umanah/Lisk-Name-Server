@@ -14,8 +14,8 @@ router.post("", async (req: Request, res: Response): Promise<void> => {
 		return;
     }
 
-    const key = generateApiKey();
-    storeApiKey(address, key);
+    const key = await generateApiKey();
+    await storeApiKey(address, key);
     res.json({ apiKey: key });
   } catch (err) {
     res.status(400).json({ error: "Verification failed", details: err });

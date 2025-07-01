@@ -9,7 +9,8 @@ import {
 	claimRefund as claimRefundUtil,
 	isAvailable as isAvailableUtil
  } from "./service_utils";
-
+import { toast } from "react-toastify";
+import { X } from "lucide-react";
 
 type ContractContextType = {
   registerName: (
@@ -106,11 +107,16 @@ export const ContractProvider = ({ children }: { children: ReactNode }) => {
 	};
 
 	const isAvailable = async ( name: string ) => {
-		if (!contract || !address) return false;
-
+		setLoading(true);
+		setError(null);
+		if (!name) {
+			toast.error("Name is required", {
+			icon: <X className="text-black"/>,
+		})
+			return false
+		}
 		return await isAvailableUtil(
 			contract,
-			address,
 			name,
 			setLoading,
 			setError
